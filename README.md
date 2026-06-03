@@ -1,2 +1,0 @@
-# Resortify
-capstone project

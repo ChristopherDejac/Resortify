@@ -209,3 +209,13 @@
   background: #f5f8fc;
   border-color: #b8c8d8;
 }
+
+.form-error {
+  background: #fef2f2;
+  color: #dc2626;
+  font-size: 13px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  text-align: center;
+}

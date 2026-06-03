@@ -21,8 +21,8 @@ export default function LandingPage() {
         </div>
       </nav>
       <div className="landing-content">
-        <h1>Luxury Redefined.<br />Welcome to RESORITY.</h1>
-        <p>You can explore the many resort around the Montalban.</p>
+        <h1>Luxury Redefined.<br />Welcome to RESORTIFY.</h1>
+        <p>Explore the many resorts around Montalban.</p>
         <Link to="/login" className="landing-cta">Explore Stays</Link>
       </div>
     </div>
