@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./LoginPage.css";
+import "./RegisterPage.css";
 
 export default function RegisterPage() {
-  const [showPassword, setShowPassword] = useState(false);
+  const [role, setRole] = useState("traveler");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [agreed, setAgreed] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -29,78 +30,134 @@ export default function RegisterPage() {
       return;
     }
 
+    if (!agreed) {
+      setError("Please agree to the Terms of Service and Privacy Policy.");
+      return;
+    }
+
     navigate("/dashboard");
   }
 
   return (
-    <div className="login-page">
-      <div className="login-top-left">
-        <div className="login-logo-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#0a4b7a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-            <polyline points="9 22 9 12 15 12 15 22" />
-          </svg>
-        </div>
-        <span className="login-logo-text">RESORTIFY</span>
-      </div>
-
-      <div className="login-card">
-        <h1 className="login-title">Create Account</h1>
-        <p className="login-subtitle">Register your resort management account</p>
-
-        <form className="login-form" onSubmit={handleSubmit}>
-          {error && <div className="form-error">{error}</div>}
-
-          <div className="input-group">
-            <label>Full Name</label>
-            <input type="text" name="name" placeholder="Enter your full name" value={name} onChange={(e) => setName(e.target.value)} />
-          </div>
-
-          <div className="input-group">
-            <label>Email</label>
-            <input type="email" name="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          </div>
-
-          <div className="input-group">
-            <label>Password</label>
-            <div className="password-wrapper">
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                placeholder="Create a password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <button
-                type="button"
-                className="eye-btn"
-                aria-label={showPassword ? "Hide password" : "Show password"}
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? (
-                  <svg viewBox="0 0 24 24" fill="none" stroke="#7a8a9a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
-                    <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
-                    <line x1="1" y1="1" x2="23" y2="23" />
-                    <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24" />
-                  </svg>
-                ) : (
-                  <svg viewBox="0 0 24 24" fill="none" stroke="#7a8a9a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                    <circle cx="12" cy="12" r="3" />
-                  </svg>
-                )}
-              </button>
+    <div className="reg-page">
+      <div className="reg-bg" />
+      <nav className="reg-nav">
+        <span className="reg-logo">HanaPin</span>
+        <Link to="/login" className="reg-signin-btn">Sign In</Link>
+      </nav>
+      <div className="reg-container">
+        <div className="reg-card reg-card-left">
+          <h1 className="reg-headline">Start your journey to the <em>Heart of Rizal.</em></h1>
+          <p className="reg-intro">Join thousands of travelers discovering the serene mountain escapes and lush river resorts of Montalban.</p>
+          <div className="reg-role-cards">
+            <div className="reg-role-card">
+              <div className="reg-role-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#003B46" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </div>
+              <h3 className="reg-role-title">Travelers</h3>
+              <p className="reg-role-desc">Find hidden gems and book seamless retreats.</p>
+            </div>
+            <div className="reg-role-card">
+              <div className="reg-role-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#003B46" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                  <line x1="8" y1="21" x2="16" y2="21" />
+                  <line x1="12" y1="17" x2="12" y2="21" />
+                </svg>
+              </div>
+              <h3 className="reg-role-title">Owners</h3>
+              <p className="reg-role-desc">List your property and grow your tourism reach.</p>
             </div>
           </div>
+        </div>
+        <div className="reg-card reg-card-right">
+          <h2 className="reg-form-title">Create Account</h2>
+          <p className="reg-form-subtitle">Fill in the details to start your adventure.</p>
 
-          <button type="submit" className="login-btn">Create Account</button>
-        </form>
+          <div className="reg-toggle">
+            <button
+              type="button"
+              className={`reg-toggle-btn ${role === "traveler" ? "active" : ""}`}
+              onClick={() => setRole("traveler")}
+            >
+              Traveler
+            </button>
+            <button
+              type="button"
+              className={`reg-toggle-btn ${role === "owner" ? "active" : ""}`}
+              onClick={() => setRole("owner")}
+            >
+              Resort Owner
+            </button>
+          </div>
 
-        <p className="signup-text">
-          Already have an account? <Link to="/login">Sign In</Link>
-        </p>
+          <form className="reg-form" onSubmit={handleSubmit}>
+            {error && <div className="form-error">{error}</div>}
+
+            <div className="reg-input-group">
+              <label>Full Name</label>
+              <div className="reg-input-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+                <input type="text" placeholder="Juan Dela Cruz" value={name} onChange={(e) => setName(e.target.value)} />
+              </div>
+            </div>
+
+            <div className="reg-input-group">
+              <label>Email Address</label>
+              <div className="reg-input-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+                <input type="email" placeholder="name@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+              </div>
+            </div>
+
+            <div className="reg-input-group">
+              <label>Password</label>
+              <div className="reg-input-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+                <input type="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} />
+              </div>
+            </div>
+
+            <label className="reg-checkbox">
+              <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />
+              <span>I agree to the <a href="/login">Terms of Service</a> and <a href="/login">Privacy Policy</a> of HanaPin.</span>
+            </label>
+
+            <button type="submit" className="reg-submit">Create Account &rarr;</button>
+          </form>
+
+          <p className="reg-signin">
+            Already have an account? <Link to="/login">Sign In</Link>
+          </p>
+        </div>
       </div>
+      <footer className="reg-footer">
+        <div className="reg-footer-inner">
+          <div className="reg-footer-left">
+            <span className="reg-footer-brand">HanaPin</span>
+            <span className="reg-footer-tagline">Discover the heart of Montalban.</span>
+          </div>
+          <div className="reg-footer-links">
+            <a href="/login">Privacy Policy</a>
+            <a href="/login">Terms of Service</a>
+            <a href="/login">Partner with Us</a>
+            <a href="/login">Contact</a>
+          </div>
+          <p className="reg-footer-copy">&copy; 2026 HanaPin Montalban. All rights reserved.</p>
+        </div>
+      </footer>
     </div>
   );
 }
