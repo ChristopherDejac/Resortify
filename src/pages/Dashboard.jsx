@@ -84,10 +84,10 @@ export default function Dashboard() {
 
             <div className="user-profile">
               <div className="user-avatar">
-                <img src="https://i.pravatar.cc/40?img=47" alt="Elena Rossi" />
+                <img src="" alt="User" />
               </div>
               <div className="user-info">
-                <span className="user-name">Elena Rossi</span>
+                <span className="user-name">User</span>
                 <span className="user-role">RESORT OWNER</span>
               </div>
             </div>
