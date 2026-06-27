@@ -155,7 +155,7 @@ export default function RegisterPage() {
             <a href="/login">Partner with Us</a>
             <a href="/login">Contact</a>
           </div>
-          <p className="reg-footer-copy">&copy; 2026 HanaPin Montalban. All rights reserved.</p>
+          <p className="reg-footer-copy">&copy; 2024 HanaPin Montalban. All rights reserved.</p>
         </div>
       </footer>
     </div>
