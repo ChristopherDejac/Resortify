@@ -47,7 +47,7 @@ export default function RegisterPage() {
       </nav>
       <div className="reg-container">
         <div className="reg-card reg-card-left">
-          <h1 className="reg-headline">Start your journey to the <em>Heart of Rizal.</em></h1>
+          <h1 className="reg-headline">Start your journey to the <em>Heart of Montalban.</em></h1>
           <p className="reg-intro">Join thousands of travelers discovering the serene mountain escapes and lush river resorts of Montalban.</p>
           <div className="reg-role-cards">
             <div className="reg-role-card">
@@ -57,7 +57,7 @@ export default function RegisterPage() {
                   <circle cx="12" cy="7" r="4" />
                 </svg>
               </div>
-              <h3 className="reg-role-title">Travelers</h3>
+              <h3 className="reg-role-title">Customer</h3>
               <p className="reg-role-desc">Find hidden gems and book seamless retreats.</p>
             </div>
             <div className="reg-role-card">
@@ -68,7 +68,7 @@ export default function RegisterPage() {
                   <line x1="12" y1="17" x2="12" y2="21" />
                 </svg>
               </div>
-              <h3 className="reg-role-title">Owners</h3>
+              <h3 className="reg-role-title">Owner</h3>
               <p className="reg-role-desc">List your property and grow your tourism reach.</p>
             </div>
           </div>
@@ -83,7 +83,7 @@ export default function RegisterPage() {
               className={`reg-toggle-btn ${role === "traveler" ? "active" : ""}`}
               onClick={() => setRole("traveler")}
             >
-              Traveler
+              Customer
             </button>
             <button
               type="button"
@@ -135,7 +135,7 @@ export default function RegisterPage() {
               <span>I agree to the <a href="/login">Terms of Service</a> and <a href="/login">Privacy Policy</a> of HanaPin.</span>
             </label>
 
-            <button type="submit" className="reg-submit">Create Account &rarr;</button>
+            <button type="submit" className="reg-submit">Create Account </button>
           </form>
 
           <p className="reg-signin">
