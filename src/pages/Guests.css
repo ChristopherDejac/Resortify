@@ -69,13 +69,13 @@
 }
 
 .gst-nav-item:hover {
-  background: #ebeced;
-  color: #083e48;
+  background: #f0f2f4;
+  color: #083F4A;
 }
 
 .gst-nav-item.active {
-  background: #ebeced;
-  color: #083e48;
+  background: #f0f2f4;
+  color: #083F4A;
   font-weight: 600;
 }
 
@@ -86,7 +86,7 @@
   top: 6px;
   bottom: 6px;
   width: 3px;
-  background: #083e48;
+  background: #083F4A;
   border-radius: 0 4px 4px 0;
 }
 
