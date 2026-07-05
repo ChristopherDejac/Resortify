@@ -72,7 +72,6 @@ export default function RegisterPage() {
       <div className="reg-bg" />
       <nav className="reg-nav">
         <span className="reg-logo">HanaPin</span>
-        <Link to="/login" className="reg-signin-btn">Sign In</Link>
       </nav>
       <div className="reg-container">
         <div className="reg-card reg-card-left">
