@@ -7,6 +7,8 @@ import Bookings from "./pages/Bookings";
 import Calendar from "./pages/Calendar";
 import Guests from "./pages/Guests";
 import Settings from "./pages/Settings";
+import Management from "./pages/Management";
+import MediaGallery from "./pages/MediaGallery";
 
 export default function App() {
   return (
@@ -20,6 +22,8 @@ export default function App() {
         <Route path="/calendar" element={<Calendar />} />
         <Route path="/guests" element={<Guests />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/management" element={<Management />} />
+        <Route path="/media-gallery" element={<MediaGallery />} />
       </Routes>
     </BrowserRouter>
   );

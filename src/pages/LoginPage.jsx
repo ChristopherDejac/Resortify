@@ -2,13 +2,50 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 
+const API_URL = "http://localhost:5000/api/auth";
+
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    navigate("/dashboard");
+    setError("");
+
+    if (!email.trim() || !password.trim()) {
+      setError("Please enter both email and password.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const res = await fetch(`${API_URL}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Login failed. Please try again.");
+        setLoading(false);
+        return;
+      }
+
+      localStorage.setItem("access_token", data.session.access_token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
+      navigate("/dashboard");
+    } catch (err) {
+      setError("Could not reach the server. Please try again.");
+      setLoading(false);
+    }
   }
 
   return (
@@ -40,9 +77,16 @@ export default function LoginPage() {
             </p>
 
             <form className="login-form" onSubmit={handleSubmit}>
+              {error && <div className="form-error">{error}</div>}
+
               <div className="login-field">
-                <label>Email or Username</label>
-                <input type="text" placeholder="hello@hanapin.com" />
+                <label>Email Address</label>
+                <input
+                  type="text"
+                  placeholder="hello@hanapin.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
 
               <div className="login-field">
@@ -51,6 +95,8 @@ export default function LoginPage() {
                   <input
                     type={showPassword ? "text" : "password"}
                     placeholder="•••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                   <button
                     type="button"
@@ -78,7 +124,9 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              <button type="submit" className="login-submit">Sign In</button>
+              <button type="submit" className="login-submit" disabled={loading}>
+                {loading ? "Signing In..." : "Sign In"}
+              </button>
             </form>
 
             <div className="login-divider"><span>OR CONTINUE WITH</span></div>

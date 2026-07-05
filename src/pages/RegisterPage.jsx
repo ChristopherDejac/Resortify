@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./RegisterPage.css";
 
+const API_URL = "http://localhost:5000/api/auth";
+
 export default function RegisterPage() {
   const [role, setRole] = useState("traveler");
   const [name, setName] = useState("");
@@ -9,9 +11,10 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [agreed, setAgreed] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     setError("");
 
@@ -35,7 +38,33 @@ export default function RegisterPage() {
       return;
     }
 
-    navigate("/dashboard");
+    setLoading(true);
+
+    try {
+      const res = await fetch(`${API_URL}/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password, role }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Registration failed. Please try again.");
+        setLoading(false);
+        return;
+      }
+
+      if (data.session) {
+        localStorage.setItem("access_token", data.session.access_token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+      }
+
+      navigate("/dashboard");
+    } catch (err) {
+      setError("Could not reach the server. Please try again.");
+      setLoading(false);
+    }
   }
 
   return (
@@ -47,7 +76,7 @@ export default function RegisterPage() {
       </nav>
       <div className="reg-container">
         <div className="reg-card reg-card-left">
-          <h1 className="reg-headline">Start your journey to the <em>Heart of Montalban.</em></h1>
+          <h1 className="reg-headline">Start your journey to the <em>Heart of Rizal.</em></h1>
           <p className="reg-intro">Join thousands of travelers discovering the serene mountain escapes and lush river resorts of Montalban.</p>
           <div className="reg-role-cards">
             <div className="reg-role-card">
@@ -57,7 +86,7 @@ export default function RegisterPage() {
                   <circle cx="12" cy="7" r="4" />
                 </svg>
               </div>
-              <h3 className="reg-role-title">Customer</h3>
+              <h3 className="reg-role-title">Travelers</h3>
               <p className="reg-role-desc">Find hidden gems and book seamless retreats.</p>
             </div>
             <div className="reg-role-card">
@@ -68,7 +97,7 @@ export default function RegisterPage() {
                   <line x1="12" y1="17" x2="12" y2="21" />
                 </svg>
               </div>
-              <h3 className="reg-role-title">Owner</h3>
+              <h3 className="reg-role-title">Owners</h3>
               <p className="reg-role-desc">List your property and grow your tourism reach.</p>
             </div>
           </div>
@@ -83,7 +112,7 @@ export default function RegisterPage() {
               className={`reg-toggle-btn ${role === "traveler" ? "active" : ""}`}
               onClick={() => setRole("traveler")}
             >
-              Customer
+              Traveler
             </button>
             <button
               type="button"
@@ -135,7 +164,9 @@ export default function RegisterPage() {
               <span>I agree to the <a href="/login">Terms of Service</a> and <a href="/login">Privacy Policy</a> of HanaPin.</span>
             </label>
 
-            <button type="submit" className="reg-submit">Create Account </button>
+            <button type="submit" className="reg-submit" disabled={loading}>
+              {loading ? "Creating Account..." : "Create Account \u2192"}
+            </button>
           </form>
 
           <p className="reg-signin">

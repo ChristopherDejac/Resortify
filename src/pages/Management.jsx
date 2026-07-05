@@ -97,7 +97,7 @@ export default function Management() {
             <div className="mgt-divider" />
             <div className="mgt-user-profile">
               <div className="mgt-user-avatar">
-                <img src="" alt="User" />
+                <img src="https://api.dicebar.com/7.x/initials/svg?seed=User" alt="User"/>
               </div>
               <div className="mgt-user-info">
                 <span className="mgt-user-name">User</span>

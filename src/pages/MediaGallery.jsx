@@ -73,7 +73,7 @@ export default function MediaGallery() {
             </button>
             <div className="mg-user-profile">
               <div className="mg-user-avatar">
-                <img src="" alt="User" />
+                <img src="https://api.dicebear.com/7.x/initials/svg?seed=User" alt="User" />
               </div>
               <div className="mg-user-info">
                 <span className="mg-user-name">User</span>
