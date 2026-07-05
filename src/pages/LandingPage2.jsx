@@ -13,7 +13,6 @@ export default function LandingPage2() {
           <Link to="/how-it-works" className="nav-link active">How It Works</Link>
         </div>
         <div className="nav-right">
-          <Link to="/login" className="nav-link sign-in">Sign In</Link>
           <Link to="/register" className="nav-link get-started">Get Started</Link>
         </div>
       </nav>
