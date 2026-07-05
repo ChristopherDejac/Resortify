@@ -119,6 +119,19 @@
   border-radius: 16px;
   padding: 24px 20px;
   text-align: center;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  font-family: inherit;
+}
+
+.reg-role-card:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.reg-role-card.selected {
+  border-color: #003B46;
+  background: rgba(255, 255, 255, 0.85);
 }
 
 .reg-role-icon {
@@ -304,6 +317,48 @@
 
 .reg-signin a:hover {
   text-decoration: underline;
+}
+
+.reg-app-download {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 8px 0;
+}
+
+.reg-app-download-text {
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.reg-app-download-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.reg-app-store-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 14px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.reg-app-store-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.6);
 }
 
 .form-error {

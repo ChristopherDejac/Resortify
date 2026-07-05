@@ -5,7 +5,7 @@ import "./RegisterPage.css";
 const API_URL = "http://localhost:5000/api/auth";
 
 export default function RegisterPage() {
-  const [role, setRole] = useState("traveler");
+  const [selectedRole, setSelectedRole] = useState(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,7 +44,7 @@ export default function RegisterPage() {
       const res = await fetch(`${API_URL}/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password, role }),
+        body: JSON.stringify({ name, email, password, role: "owner" }),
       });
 
       const data = await res.json();
@@ -78,7 +78,11 @@ export default function RegisterPage() {
           <h1 className="reg-headline">Start your journey to the <em>Heart of Rizal.</em></h1>
           <p className="reg-intro">Join thousands of travelers discovering the serene mountain escapes and lush river resorts of Montalban.</p>
           <div className="reg-role-cards">
-            <div className="reg-role-card">
+            <button
+              type="button"
+              className={`reg-role-card ${selectedRole === "traveler" ? "selected" : ""}`}
+              onClick={() => setSelectedRole("traveler")}
+            >
               <div className="reg-role-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="#003B46" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
@@ -87,8 +91,12 @@ export default function RegisterPage() {
               </div>
               <h3 className="reg-role-title">Travelers</h3>
               <p className="reg-role-desc">Find hidden gems and book seamless retreats.</p>
-            </div>
-            <div className="reg-role-card">
+            </button>
+            <button
+              type="button"
+              className={`reg-role-card ${selectedRole === "owner" ? "selected" : ""}`}
+              onClick={() => setSelectedRole("owner")}
+            >
               <div className="reg-role-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="#003B46" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
@@ -98,80 +106,87 @@ export default function RegisterPage() {
               </div>
               <h3 className="reg-role-title">Owners</h3>
               <p className="reg-role-desc">List your property and grow your tourism reach.</p>
-            </div>
-          </div>
-        </div>
-        <div className="reg-card reg-card-right">
-          <h2 className="reg-form-title">Create Account</h2>
-          <p className="reg-form-subtitle">Fill in the details to start your adventure.</p>
-
-          <div className="reg-toggle">
-            <button
-              type="button"
-              className={`reg-toggle-btn ${role === "traveler" ? "active" : ""}`}
-              onClick={() => setRole("traveler")}
-            >
-              Traveler
-            </button>
-            <button
-              type="button"
-              className={`reg-toggle-btn ${role === "owner" ? "active" : ""}`}
-              onClick={() => setRole("owner")}
-            >
-              Resort Owner
             </button>
           </div>
-
-          <form className="reg-form" onSubmit={handleSubmit}>
-            {error && <div className="form-error">{error}</div>}
-
-            <div className="reg-input-group">
-              <label>Full Name</label>
-              <div className="reg-input-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                  <circle cx="12" cy="7" r="4" />
-                </svg>
-                <input type="text" placeholder="Juan Dela Cruz" value={name} onChange={(e) => setName(e.target.value)} />
-              </div>
-            </div>
-
-            <div className="reg-input-group">
-              <label>Email Address</label>
-              <div className="reg-input-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                  <polyline points="22,6 12,13 2,6" />
-                </svg>
-                <input type="email" placeholder="name@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
-              </div>
-            </div>
-
-            <div className="reg-input-group">
-              <label>Password</label>
-              <div className="reg-input-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                </svg>
-                <input type="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} />
-              </div>
-            </div>
-
-            <label className="reg-checkbox">
-              <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />
-              <span>I agree to the <a href="/login">Terms of Service</a> and <a href="/login">Privacy Policy</a> of HanaPin.</span>
-            </label>
-
-            <button type="submit" className="reg-submit" disabled={loading}>
-              {loading ? "Creating Account..." : "Create Account \u2192"}
-            </button>
-          </form>
-
-          <p className="reg-signin">
-            Already have an account? <Link to="/login">Sign In</Link>
-          </p>
         </div>
+
+        {selectedRole && (
+          <div className="reg-card reg-card-right">
+            {selectedRole === "traveler" ? (
+              <>
+                <h2 className="reg-form-title">Get the App</h2>
+                <p className="reg-form-subtitle">
+                  HanaPin for travelers is available on our mobile app. Download it to create your account, search resorts, and book your stay.
+                </p>
+                <div className="reg-app-download">
+                  <div className="reg-app-download-buttons">
+                    <a href="#" className="reg-app-store-btn">
+                      Download on the App Store
+                    </a>
+                    <a href="#" className="reg-app-store-btn">
+                      Get it on Google Play
+                    </a>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <h2 className="reg-form-title">Create Account</h2>
+                <p className="reg-form-subtitle">Fill in the details to register your resort.</p>
+
+                <form className="reg-form" onSubmit={handleSubmit}>
+                  {error && <div className="form-error">{error}</div>}
+
+                  <div className="reg-input-group">
+                    <label>Full Name</label>
+                    <div className="reg-input-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                      </svg>
+                      <input type="text" placeholder="Juan Dela Cruz" value={name} onChange={(e) => setName(e.target.value)} />
+                    </div>
+                  </div>
+
+                  <div className="reg-input-group">
+                    <label>Email Address</label>
+                    <div className="reg-input-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                        <polyline points="22,6 12,13 2,6" />
+                      </svg>
+                      <input type="email" placeholder="name@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    </div>
+                  </div>
+
+                  <div className="reg-input-group">
+                    <label>Password</label>
+                    <div className="reg-input-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                      </svg>
+                      <input type="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    </div>
+                  </div>
+
+                  <label className="reg-checkbox">
+                    <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />
+                    <span>I agree to the <a href="/login">Terms of Service</a> and <a href="/login">Privacy Policy</a> of HanaPin.</span>
+                  </label>
+
+                  <button type="submit" className="reg-submit" disabled={loading}>
+                    {loading ? "Creating Account..." : "Create Account \u2192"}
+                  </button>
+                </form>
+
+                <p className="reg-signin">
+                  Already have an account? <Link to="/login">Sign In</Link>
+                </p>
+              </>
+            )}
+          </div>
+        )}
       </div>
       <footer className="reg-footer">
         <div className="reg-footer-inner">
