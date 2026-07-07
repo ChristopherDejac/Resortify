@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import OwnerRegisterPage from "./pages/OwnerRegisterPage";
 import Dashboard from "./pages/Dashboard";
 import Bookings from "./pages/Bookings";
 import Calendar from "./pages/Calendar";
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/register/owner" element={<OwnerRegisterPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/bookings" element={<Bookings />} />
         <Route path="/calendar" element={<Calendar />} />
