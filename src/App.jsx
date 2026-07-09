@@ -10,6 +10,7 @@ import Guests from "./pages/Guests";
 import Settings from "./pages/Settings";
 import Management from "./pages/Management";
 import MediaGallery from "./pages/MediaGallery";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
   return (
@@ -19,13 +20,63 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/register/owner" element={<OwnerRegisterPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/bookings" element={<Bookings />} />
-        <Route path="/calendar" element={<Calendar />} />
-        <Route path="/guests" element={<Guests />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/management" element={<Management />} />
-        <Route path="/media-gallery" element={<MediaGallery />} />
+
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/bookings"
+          element={
+            <ProtectedRoute>
+              <Bookings />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/calendar"
+          element={
+            <ProtectedRoute>
+              <Calendar />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/guests"
+          element={
+            <ProtectedRoute>
+              <Guests />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute>
+              <Settings />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/management"
+          element={
+            <ProtectedRoute>
+              <Management />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/media-gallery"
+          element={
+            <ProtectedRoute>
+              <MediaGallery />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
