@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-  padding: 0;
+  padding: 0 0 60px;
   border-right: 1px solid #e8ecf0;
   height: 100vh;
   position: sticky;
@@ -310,7 +310,6 @@
 .mgt-content {
   flex: 1;
   padding: 32px 36px;
-  max-width: 900px;
   overflow-y: auto;
 }
 
