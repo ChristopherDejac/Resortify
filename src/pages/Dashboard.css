@@ -16,6 +16,7 @@
   height: 100vh;
   border-right: 1px solid #e8ecf0;
   overflow-y: auto;
+  padding-bottom: 60px;
 }
 
 .sidebar-brand {
@@ -261,7 +262,6 @@
 /* ── Content ── */
 .dash-content {
   padding: 32px 36px;
-  max-width: 1200px;
   overflow-y: auto;
   flex: 1;
 }
