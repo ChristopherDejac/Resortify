@@ -118,10 +118,7 @@ export default function LandingPage2() {
         <div className="how-cta-inner">
           <h2 className="how-cta-title">Ready to Start Your Journey?</h2>
           <p className="how-cta-text">Whether you're planning your next escape or looking to share your property with the world, HanaPin is your partner in discovery.</p>
-          <div className="how-cta-actions">
-            <Link to="/register" className="how-cta-primary">Get Started</Link>
-            <Link to="/login" className="how-cta-secondary">Sign In</Link>
-          </div>
+          <Link to="/register" className="how-cta-primary">Get Started</Link>
         </div>
       </section>
 
