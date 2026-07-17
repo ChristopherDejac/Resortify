@@ -3,6 +3,7 @@ import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import OwnerRegisterPage from "./pages/OwnerRegisterPage";
+import RegistrationPage from "./pages/RegistrationPage";
 import Dashboard from "./pages/Dashboard";
 import Bookings from "./pages/Bookings";
 import Calendar from "./pages/Calendar";
@@ -20,6 +21,15 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/register/owner" element={<OwnerRegisterPage />} />
+
+        <Route
+          path="/establishment-type"
+          element={
+            <ProtectedRoute>
+              <RegistrationPage />
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path="/dashboard"
