@@ -1,4 +1,4 @@
-import { supabase } from "../config/supabase.js";
+import { supabase, createAuthClient } from "../config/supabase.js";
 
 export async function register(req, res) {
   const { name, email, password, role } = req.body;
@@ -41,8 +41,9 @@ export async function register(req, res) {
       .json({ error: "Failed to create profile: " + profileError.message });
   }
 
+  const authClient = createAuthClient();
   const { data: sessionData, error: signInError } =
-    await supabase.auth.signInWithPassword({ email, password });
+    await authClient.auth.signInWithPassword({ email, password });
 
   if (signInError) {
     return res.status(201).json({
@@ -65,7 +66,8 @@ export async function login(req, res) {
     return res.status(400).json({ error: "Email and password are required." });
   }
 
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const authClient = createAuthClient();
+  const { data, error } = await authClient.auth.signInWithPassword({
     email,
     password,
   });

@@ -59,7 +59,7 @@ export default function OwnerRegisterPage() {
         localStorage.setItem("user", JSON.stringify(data.user));
       }
 
-      navigate("/dashboard");
+      navigate("/establishment-type");
     } catch (err) {
       setError("Could not reach the server. Please try again.");
       setLoading(false);
