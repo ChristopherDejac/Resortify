@@ -867,3 +867,30 @@
   overflow: hidden;
   margin-top: 8px;
 }
+
+/* ── Responsive - Laptop ── */
+@media (max-width: 1200px) {
+
+  .mgt-sidebar {
+    width: 100px;
+  }
+
+  .mgt-sidebar-title,
+  .mgt-sidebar-sub,
+  .mgt-nav-item span,
+  .mgt-sidebar-footer span {
+    display: none;
+  }
+
+  .mgt-nav-item {
+    justify-content: center;
+  }
+
+  .mgt-sections-panel {
+    width: 220px;
+  }
+
+  .mgt-content {
+    padding: 24px;
+  }
+}

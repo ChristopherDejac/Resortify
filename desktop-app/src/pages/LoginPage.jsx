@@ -34,13 +34,13 @@ export default function LoginPage() {
             <div className="login-field">
               <div className="login-label-row">
                 <label>Password</label>
-                <a href="/login" className="login-forgot">Forgot Password?</a>
               </div>
               <div className="login-password-wrap">
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="•••••••••"
                 />
+                <a href="/login" className="login-forgot">Forgot Password?</a>
                 <button
                   type="button"
                   className="login-eye"
