@@ -4,113 +4,112 @@ import "./LoginPage.css";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
-    setError("");
-
-    if (!email.trim() || !password.trim()) {
-      setError("Please fill in all fields.");
-      return;
-    }
-
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      setError("Please enter a valid email address.");
-      return;
-    }
-
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters.");
-      return;
-    }
-
     navigate("/dashboard");
   }
 
   return (
     <div className="login-page">
-      <div className="login-top-left">
-        <div className="login-logo-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#0a4b7a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-            <polyline points="9 22 9 12 15 12 15 22" />
-          </svg>
-        </div>
-        <span className="login-logo-text">RESORTIFY</span>
-      </div>
+      <div className="login-bg" />
+      <div className="login-bg-overlay" />
 
-      <div className="login-card">
-        <h1 className="login-title">Welcome Back</h1>
-        <p className="login-subtitle">Sign in to manage your resort</p>
+      <nav className="login-nav">
+        <Link to="/" className="login-logo">HanaPin</Link>
+      </nav>
 
-        <form className="login-form" onSubmit={handleSubmit}>
-          {error && <div className="form-error">{error}</div>}
+      <main className="login-main">
+        <div className="login-card">
+          <h1 className="login-title">Welcome!</h1>
+          <p className="login-subtitle">Sign in to manage your bookings and explore hidden gems.</p>
 
-          <div className="input-group">
-            <label>Email</label>
-            <input type="email" name="email" placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          </div>
-
-          <div className="input-group">
-            <label>Password</label>
-            <div className="password-wrapper">
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                placeholder="Enter your password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <button
-                type="button"
-                className="eye-btn"
-                aria-label={showPassword ? "Hide password" : "Show password"}
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? (
-                  <svg viewBox="0 0 24 24" fill="none" stroke="#7a8a9a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
-                    <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
-                    <line x1="1" y1="1" x2="23" y2="23" />
-                    <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24" />
-                  </svg>
-                ) : (
-                  <svg viewBox="0 0 24 24" fill="none" stroke="#7a8a9a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                    <circle cx="12" cy="12" r="3" />
-                  </svg>
-                )}
-              </button>
+          <form className="login-form" onSubmit={handleSubmit}>
+            <div className="login-field">
+              <label>Email or Username</label>
+              <input type="text" placeholder="name@example.com" />
             </div>
+
+            <div className="login-field">
+              <div className="login-label-row">
+                <label>Password</label>
+                <a href="/login" className="login-forgot">Forgot Password?</a>
+              </div>
+              <div className="login-password-wrap">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="•••••••••"
+                />
+                <button
+                  type="button"
+                  className="login-eye"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
+                      <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
+                      <line x1="1" y1="1" x2="23" y2="23" />
+                      <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24" />
+                    </svg>
+                  ) : (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                      <circle cx="12" cy="12" r="3" />
+                    </svg>
+                  )}
+                </button>
+              </div>
+            </div>
+
+            <button type="submit" className="login-submit">Sign In</button>
+          </form>
+
+          <div className="login-divider"><span>OR CONTINUE WITH</span></div>
+
+          <div className="login-social">
+            <button className="login-social-btn">
+              <svg viewBox="0 0 24 24" width="18" height="18">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4" />
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" />
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" />
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" />
+              </svg>
+              Google
+            </button>
+            <button className="login-social-btn">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="#1877F2">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+              </svg>
+              Facebook
+            </button>
           </div>
 
-          <div className="forgot-row">
-            <Link to="/login">Forgot password?</Link>
+          <p className="login-signup-row">
+            Don&apos;t have an account? <Link to="/register">Sign Up</Link>
+          </p>
+        </div>
+      </main>
+
+      <footer className="login-footer">
+        <div className="login-footer-inner">
+          <div className="login-footer-left">
+            <span className="login-footer-brand">HanaPin</span>
+            <p className="login-footer-tagline">Discover the heart of Montalban.</p>
           </div>
-
-          <button type="submit" className="login-btn">Login</button>
-        </form>
-
-        <p className="signup-text">
-          Don't have an account? <Link to="/register">Sign Up</Link>
-        </p>
-
-        <div className="divider"><span>or</span></div>
-
-        <button className="google-btn">
-          <svg viewBox="0 0 48 48" width="20" height="20">
-            <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z" />
-            <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z" />
-            <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z" />
-            <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z" />
-          </svg>
-          Sign in with Google
-        </button>
-      </div>
+          <div className="login-footer-center">
+            <a href="/login" className="login-footer-link">Privacy Policy</a>
+            <a href="/login" className="login-footer-link">Terms of Service</a>
+            <a href="/login" className="login-footer-link">Partner with Us</a>
+            <a href="/login" className="login-footer-link">Contact</a>
+          </div>
+          <div className="login-footer-right">
+            <p className="login-footer-copy">&copy; 2024 HanaPin Montalban. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

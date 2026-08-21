@@ -1,0 +1,20 @@
+{
+  "name": "resortify-admin",
+  "version": "1.0.0",
+  "description": "Resortify Admin Desktop Application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron ."
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0",
+    "recharts": "^2.15.0"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "@electron/rebuild": "^3.6.0"
+  }
+}

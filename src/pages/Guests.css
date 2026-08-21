@@ -1,0 +1,564 @@
+.gst-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background: #f7f8fa;
+}
+
+/* ── Sidebar ── */
+.gst-sidebar {
+  width: 240px;
+  background: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  padding: 0 0 60px;
+  border-right: 1px solid #e8ecf0;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+}
+
+.gst-sidebar-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 28px 24px 20px;
+}
+
+.gst-sidebar-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #083e48;
+}
+
+.gst-sidebar-sub {
+  font-size: 10px;
+  font-weight: 600;
+  color: #9aa8b2;
+  letter-spacing: 1.5px;
+}
+
+.gst-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0 12px;
+  flex: 1;
+}
+
+.gst-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: #5a6a7a;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+  position: relative;
+}
+
+.gst-nav-item svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.gst-nav-item:hover {
+  background: #f0f2f4;
+  color: #083F4A;
+}
+
+.gst-nav-item.active {
+  background: #f0f2f4;
+  color: #083F4A;
+  font-weight: 600;
+}
+
+.gst-nav-item.active::before {
+  content: "";
+  position: absolute;
+  left: -12px;
+  top: 6px;
+  bottom: 6px;
+  width: 3px;
+  background: #083F4A;
+  border-radius: 0 4px 4px 0;
+}
+
+.gst-sidebar-divider {
+  height: 1px;
+  background: #e8ecf0;
+  margin-top: auto;
+  margin-bottom: 12px;
+}
+
+.gst-sidebar-footer {
+  padding: 12px 12px 20px;
+  border-top: 1px solid #e8ecf0;
+}
+
+/* ── Main ── */
+.gst-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.gst-topbar {
+  display: flex;
+  align-items: center;
+  padding: 16px 36px;
+  background: #fff;
+  border-bottom: 1px solid #e8ecf0;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.gst-topbar-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #083e48;
+  margin: 0;
+}
+
+.gst-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: auto;
+}
+
+.gst-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f5f7f8;
+  border-radius: 24px;
+  padding: 8px 18px;
+  min-width: 220px;
+}
+
+.gst-search svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.gst-search input {
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 14px;
+  width: 100%;
+  color: #1a2a3a;
+}
+
+.gst-search input::placeholder {
+  color: #9aabba;
+}
+
+.gst-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  display: flex;
+}
+
+.gst-icon-btn svg {
+  width: 22px;
+  height: 22px;
+}
+
+.gst-user-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gst-user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.gst-user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gst-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.gst-user-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a2e;
+  line-height: 1.2;
+}
+
+.gst-user-role {
+  font-size: 10px;
+  font-weight: 600;
+  color: #9aa8b2;
+  letter-spacing: 0.8px;
+}
+
+/* ── Content ── */
+.gst-content {
+  flex: 1;
+  padding: 36px 40px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ── Sentiment ── */
+.gst-sentiment-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 6px;
+}
+
+.gst-sentiment-desc {
+  font-size: 14px;
+  color: #7a8a9a;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ── KPI Grid ── */
+.gst-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.gst-kpi-card {
+  background: #fff;
+  border: 1px solid #e7e7e7;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.gst-kpi-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gst-kpi-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.gst-kpi-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.gst-kpi-icon.green {
+  background: #e4f5ed;
+  color: #0d7a52;
+}
+
+.gst-kpi-icon.blue {
+  background: #e4edf5;
+  color: #2a6b9c;
+}
+
+.gst-kpi-icon.purple {
+  background: #ede4f5;
+  color: #7a4a9c;
+}
+
+.gst-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  margin-left: auto;
+}
+
+.gst-badge.green {
+  background: #e4f5ed;
+  color: #0d7a52;
+}
+
+.gst-badge.gray {
+  background: #f0f0f0;
+  color: #7a8a9a;
+}
+
+.gst-kpi-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #7a8a9a;
+  letter-spacing: 0.8px;
+}
+
+.gst-kpi-value {
+  font-size: 28px;
+  font-weight: 800;
+  color: #14344a;
+  line-height: 1.1;
+}
+
+/* ── Feedback Header ── */
+.gst-feedback-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gst-feedback-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.gst-feedback-filters {
+  display: flex;
+  gap: 10px;
+}
+
+.gst-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  border-radius: 20px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: #4e5560;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.gst-filter-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ── Review Cards ── */
+.gst-reviews {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.gst-empty {
+  background: #fff;
+  border: 1px solid #e7e7e7;
+  border-radius: 12px;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.gst-empty svg {
+  width: 40px;
+  height: 40px;
+}
+
+.gst-empty-text {
+  font-size: 14px;
+  color: #8a8f98;
+}
+
+.gst-review-card {
+  background: #fff;
+  border: 1px solid #e7e7e7;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.gst-review-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.gst-review-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gst-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.gst-review-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #1a1a2e;
+  display: block;
+}
+
+.gst-review-badge {
+  font-size: 9px;
+  font-weight: 700;
+  color: #0d7a52;
+  letter-spacing: 0.8px;
+}
+
+.gst-review-badge.muted {
+  color: #8a8f98;
+}
+
+.gst-review-date {
+  font-size: 12px;
+  color: #8a8f98;
+  white-space: nowrap;
+}
+
+.gst-stars {
+  display: flex;
+  gap: 3px;
+}
+
+.gst-stars svg {
+  width: 18px;
+  height: 18px;
+}
+
+.gst-review-text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #4e5560;
+  margin: 0;
+  font-style: italic;
+}
+
+/* ── Response ── */
+.gst-response {
+  background: #f7f8fa;
+  border-radius: 10px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gst-response-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gst-response-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: #7a8a9a;
+  letter-spacing: 1px;
+}
+
+.gst-response-date {
+  font-size: 11px;
+  color: #8a8f98;
+}
+
+.gst-response-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #4e5560;
+  margin: 0;
+}
+
+/* ── Actions ── */
+.gst-review-actions {
+  display: flex;
+  gap: 16px;
+  padding-top: 4px;
+}
+
+.gst-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 4px 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #7a8a9a;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.gst-action-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.gst-action-btn.primary {
+  color: #0d7a52;
+  font-weight: 600;
+}
+
+/* ── View More ── */
+.gst-view-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 20px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  color: #4e5560;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  align-self: center;
+}
+
+.gst-view-more svg {
+  width: 16px;
+  height: 16px;
+}
