@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "Resortify",
+    "slug": "resortify-customer",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": false,
+    "splash": {
+      "backgroundColor": "#083F4A"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.resortify.customer"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#083F4A"
+      },
+      "package": "com.resortify.customer"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-asset",
+      "expo-font"
+    ]
+  }
+}
