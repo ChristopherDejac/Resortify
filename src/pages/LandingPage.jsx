@@ -13,7 +13,7 @@ export default function LandingPage() {
           <Link to="/how-it-works" className="nav-link">How It Works</Link>
         </div>
         <div className="nav-right">
-          <Link to="/establishment-type" className="nav-link get-started">Get Started</Link>
+          <Link to="/register" className="nav-link get-started">Get Started</Link>
         </div>
       </nav>
       <div className="hero">

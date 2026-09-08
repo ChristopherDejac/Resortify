@@ -10,6 +10,9 @@ export default function LandingPage3() {
         <div className="nav-left">
           <Link to="/" className="logo-text">HanaPin</Link>
         </div>
+        <div className="nav-right">
+          <Link to="/login" className="lp3-nav-back">Back</Link>
+        </div>
       </nav>
 
       <section className="lp3-hero">
@@ -25,8 +28,8 @@ export default function LandingPage3() {
               className="lp3-option"
               role="button"
               tabIndex={0}
-              onClick={() => navigate("/register?type=resort")}
-              onKeyDown={(e) => e.key === "Enter" && navigate("/register?type=resort")}
+              onClick={() => navigate("/resort-registration?type=resort")}
+              onKeyDown={(e) => e.key === "Enter" && navigate("/resort-registration?type=resort")}
             >
               <h2 className="lp3-option-title">Resort</h2>
               <p className="lp3-option-desc">
@@ -38,8 +41,8 @@ export default function LandingPage3() {
               className="lp3-option"
               role="button"
               tabIndex={0}
-              onClick={() => navigate("/register?type=mabuhay")}
-              onKeyDown={(e) => e.key === "Enter" && navigate("/register?type=mabuhay")}
+              onClick={() => navigate("/resort-registration?type=mabuhay")}
+              onKeyDown={(e) => e.key === "Enter" && navigate("/resort-registration?type=mabuhay")}
             >
               <h2 className="lp3-option-title">Mabuhay Accommodation</h2>
               <p className="lp3-option-desc">

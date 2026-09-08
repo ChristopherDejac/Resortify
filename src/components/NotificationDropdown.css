@@ -1,0 +1,159 @@
+.notif {
+  position: relative;
+  display: flex;
+}
+
+.notif-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  display: flex;
+  position: relative;
+}
+
+.notif-btn:hover {
+  background: #f0f2f4;
+}
+
+.notif-btn svg {
+  width: 22px;
+  height: 22px;
+}
+
+.notif-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 30;
+}
+
+.notif-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 240px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  z-index: 31;
+  animation: notif-in 0.18s ease;
+}
+
+@keyframes notif-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.notif-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.notif-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.notif-unread {
+  font-size: 10px;
+  font-weight: 600;
+  color: #d94a5c;
+  background: #ffe7ea;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.notif-mark-all {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 600;
+  color: #286b75;
+  font-family: inherit;
+  padding: 2px;
+}
+
+.notif-mark-all svg {
+  width: 10px;
+  height: 10px;
+}
+
+.notif-body {
+  padding: 16px;
+  min-height: 132px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notif-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.notif-empty-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #fff4d6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6px;
+}
+
+.notif-empty-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.notif-empty-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.notif-empty-sub {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.notif-view-all {
+  display: block;
+  width: 100%;
+  padding: 11px;
+  background: #f3f4f6;
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1f2937;
+  font-family: inherit;
+  transition: background 0.2s;
+}
+
+.notif-view-all:hover {
+  background: #eaeced;
+}

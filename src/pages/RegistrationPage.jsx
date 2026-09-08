@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./RegistrationPage.css";
 
@@ -23,8 +23,167 @@ export default function RegistrationPage() {
     Array(17).fill(false).map((_, i) => i === 0 || i === 3)
   );
   const [declarations, setDeclarations] = useState([false, false]);
+  const [declarationError, setDeclarationError] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [lastSaved, setLastSaved] = useState(() => {
+    const stored = localStorage.getItem("hanapin_registration_draft_saved_at");
+    const parsed = stored ? parseInt(stored, 10) : NaN;
+    return Number.isFinite(parsed) ? parsed : Date.now();
+  });
+  const [now, setNow] = useState(new Date());
+  const [savedFlash, setSavedFlash] = useState(false);
+  const declarationsRef = useRef(declarations);
+  declarationsRef.current = declarations;
   const navigate = useNavigate();
+
+  function formatLastSavedFrom(nowMs) {
+    const diff = Math.max(0, nowMs - lastSaved);
+    const s = Math.floor(diff / 1000);
+    if (s < 5) return "Just now";
+    if (s < 60) return `${s} seconds ago`;
+    const m = Math.floor(s / 60);
+    if (m < 60) return m === 1 ? "1 minute ago" : `${m} minutes ago`;
+    const h = Math.floor(m / 60);
+    return h === 1 ? "1 hour ago" : `${h} hours ago`;
+  }
+
+  function updateProgress() {
+    let filled = 0;
+    let total = 0;
+    document.querySelectorAll("[required]").forEach((el) => {
+      total += 1;
+      if (el.value && el.value.trim()) filled += 1;
+    });
+    total += 2;
+    if (declarationsRef.current[0]) filled += 1;
+    if (declarationsRef.current[1]) filled += 1;
+    setProgress(total ? Math.round((filled / total) * 100) : 0);
+  }
+
+  useEffect(() => {
+    function handleScroll() {
+      const offset = 120;
+      let current = 0;
+      sections.forEach((_, i) => {
+        const el = document.getElementById(`reg-section-${i}`);
+        if (el && el.getBoundingClientRect().top <= offset) {
+          current = i;
+        }
+      });
+      setActiveSection(current);
+    }
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    function clearInvalid() {
+      document.querySelectorAll(".regp-input.invalid, .regp-textarea.invalid").forEach((el) => {
+        el.classList.remove("invalid");
+      });
+    }
+
+    window.addEventListener("focusin", clearInvalid);
+    window.addEventListener("input", clearInvalid);
+    return () => {
+      window.removeEventListener("focusin", clearInvalid);
+      window.removeEventListener("input", clearInvalid);
+    };
+  }, []);
+
+  useEffect(() => {
+    function handleActivity() {
+      updateProgress();
+    }
+
+    window.addEventListener("focusin", handleActivity);
+    window.addEventListener("input", handleActivity);
+    return () => {
+      window.removeEventListener("focusin", handleActivity);
+      window.removeEventListener("input", handleActivity);
+    };
+  }, []);
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      setNow(new Date());
+    }, 1000);
+    return () => clearInterval(t);
+  }, []);
+
+  function handleSaveProgress() {
+    const fields = {};
+    document.querySelectorAll(".regp-input, .regp-textarea").forEach((el, i) => {
+      const key = el.getAttribute("data-label") || `field-${i + 1}`;
+      fields[key] = el.value;
+    });
+
+    localStorage.setItem(
+      "hanapin_registration_draft",
+      JSON.stringify({
+        fields,
+        category,
+        amenities,
+        declarations,
+        savedAt: new Date().toISOString(),
+      })
+    );
+
+    const t = Date.now();
+    setLastSaved(t);
+    localStorage.setItem("hanapin_registration_draft_saved_at", String(t));
+    setSavedFlash(true);
+    setTimeout(() => setSavedFlash(false), 2000);
+  }
+
+  function handleDiscard() {
+    if (!window.confirm("Discard this draft? All entered details will be cleared.")) {
+      return;
+    }
+    document.querySelectorAll(".regp-input, .regp-textarea").forEach((el) => {
+      if (el.tagName.toLowerCase() !== "select") el.value = "";
+    });
+    document.querySelectorAll("select.regp-input").forEach((el) => {
+      el.selectedIndex = 0;
+    });
+    setCategory({ private: false, public: true });
+    setAmenities(Array(17).fill(false).map((_, i) => i === 0 || i === 3));
+    setDeclarations([false, false]);
+    declarationsRef.current = [false, false];
+    setSavedAt("");
+    updateProgress();
+  }
+
+  function handleSubmitRegistration() {
+    const emptyEls = [];
+
+    document.querySelectorAll("[required]").forEach((el) => {
+      if (!el.value || !el.value.trim()) {
+        emptyEls.push(el);
+      }
+    });
+
+    if (emptyEls.length > 0) {
+      emptyEls.forEach((el) => el.classList.add("invalid"));
+      emptyEls[0].scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+
+    if (!declarations[0] || !declarations[1]) {
+      document.querySelectorAll(".regp-declaration-card.invalid").forEach((el) => el.classList.remove("invalid"));
+      document.querySelectorAll(".regp-declaration-card").forEach((card, i) => {
+        if (!declarations[i]) card.classList.add("invalid");
+      });
+      setDeclarationError(true);
+      document.getElementById("reg-section-10")?.scrollIntoView({ behavior: "smooth", block: "center" });
+      setActiveSection(10);
+      return;
+    }
+
+    setShowModal(true);
+  }
 
   function handleSectionClick(index) {
     setActiveSection(index);
@@ -40,6 +199,8 @@ export default function RegistrationPage() {
   }
 
   function toggleDeclaration(index) {
+    document.querySelectorAll(".regp-declaration-card.invalid").forEach((el) => el.classList.remove("invalid"));
+    setDeclarationError(false);
     setDeclarations((prev) => prev.map((v, i) => (i === index ? !v : v)));
   }
 
@@ -47,6 +208,9 @@ export default function RegistrationPage() {
     <div className="regp-page">
       <nav className="regp-nav">
         <Link to="/" className="regp-logo">HanaPin</Link>
+        <div className="regp-nav-right">
+          <Link to="/establishment-type" className="regp-nav-link">Back</Link>
+        </div>
       </nav>
 
       <div className="regp-content">
@@ -86,7 +250,7 @@ export default function RegistrationPage() {
             </div>
             <div className="regp-field">
               <label className="regp-label">Resort Name</label>
-              <input className="regp-input" type="text" placeholder="e.g. Azure Sands Lagoon Resort" />
+              <input className="regp-input" type="text" placeholder="e.g. Azure Sands Lagoon Resort" required data-label="Resort Name" />
             </div>
             <div className="regp-field">
               <label className="regp-label">Description</label>
@@ -143,25 +307,25 @@ export default function RegistrationPage() {
             <div className="regp-row-split">
               <div className="regp-field regp-field-wide">
                 <label className="regp-label">Address / Street</label>
-                <input className="regp-input" type="text" />
+                <input className="regp-input" type="text" required data-label="Address / Street" />
               </div>
               <div className="regp-field regp-field-narrow">
                 <label className="regp-label">Barangay</label>
-                <input className="regp-input" type="text" />
+                <input className="regp-input" type="text" required data-label="Barangay" />
               </div>
             </div>
             <div className="regp-row-thirds">
               <div className="regp-field">
                 <label className="regp-label">City/Municipality</label>
-                <input className="regp-input" type="text" />
+                <input className="regp-input" type="text" required data-label="City/Municipality" />
               </div>
               <div className="regp-field">
                 <label className="regp-label">Province</label>
-                <input className="regp-input" type="text" />
+                <input className="regp-input" type="text" required data-label="Province" />
               </div>
               <div className="regp-field">
                 <label className="regp-label">ZIP Code</label>
-                <input className="regp-input" type="text" />
+                <input className="regp-input" type="text" required data-label="ZIP Code" />
               </div>
             </div>
             <div className="regp-map">
@@ -185,11 +349,11 @@ export default function RegistrationPage() {
             <div className="regp-row">
               <div className="regp-field">
                 <label className="regp-label">Official Email</label>
-                <input className="regp-input" type="email" placeholder="contact@resort.com" />
+                <input className="regp-input" type="email" placeholder="contact@resort.com" required data-label="Official Email" />
               </div>
               <div className="regp-field">
                 <label className="regp-label">Phone Number</label>
-                <input className="regp-input" type="text" placeholder="+63 000 000 0000" />
+                <input className="regp-input" type="text" placeholder="+63 000 000 0000" required data-label="Phone Number" />
               </div>
             </div>
           </div>
@@ -203,11 +367,11 @@ export default function RegistrationPage() {
             <div className="regp-row">
               <div className="regp-field">
                 <label className="regp-label">Opening Hours</label>
-                <input className="regp-input" type="text" placeholder="--:-- --" />
+                <input className="regp-input" type="text" placeholder="--:-- --" required data-label="Opening Hours" />
               </div>
               <div className="regp-field">
                 <label className="regp-label">Closing Hours</label>
-                <input className="regp-input" type="text" placeholder="--:-- --" />
+                <input className="regp-input" type="text" placeholder="--:-- --" required data-label="Closing Hours" />
               </div>
             </div>
           </div>
@@ -221,15 +385,15 @@ export default function RegistrationPage() {
             <div className="regp-row-thirds">
               <div className="regp-field">
                 <label className="regp-label">Adult Fee</label>
-                <input className="regp-input" type="text" placeholder="0.00" />
+                <input className="regp-input" type="text" placeholder="0.00" required data-label="Adult Fee" />
               </div>
               <div className="regp-field">
                 <label className="regp-label">Child Fee</label>
-                <input className="regp-input" type="text" placeholder="0.00" />
+                <input className="regp-input" type="text" placeholder="0.00" required data-label="Child Fee" />
               </div>
               <div className="regp-field">
                 <label className="regp-label">Senior/PWD Fee</label>
-                <input className="regp-input" type="text" placeholder="0.00" />
+                <input className="regp-input" type="text" placeholder="0.00" required data-label="Senior/PWD Fee" />
               </div>
             </div>
           </div>
@@ -298,11 +462,11 @@ export default function RegistrationPage() {
             <div className="regp-row">
               <div className="regp-field">
                 <label className="regp-label">Check-in Time</label>
-                <input className="regp-input" type="text" placeholder="--:-- --" />
+                <input className="regp-input" type="text" placeholder="--:-- --" required data-label="Check-in Time" />
               </div>
               <div className="regp-field">
                 <label className="regp-label">Check-out Time</label>
-                <input className="regp-input" type="text" placeholder="--:-- --" />
+                <input className="regp-input" type="text" placeholder="--:-- --" required data-label="Check-out Time" />
               </div>
             </div>
             <div className="regp-field">
@@ -320,11 +484,11 @@ export default function RegistrationPage() {
             <div className="regp-row">
               <div className="regp-field">
                 <label className="regp-label">Local Emergency Contact</label>
-                <input className="regp-input" type="text" placeholder="Police/Hospital Number" />
+                <input className="regp-input" type="text" placeholder="Police/Hospital Number" required data-label="Local Emergency Contact" />
               </div>
               <div className="regp-field">
                 <label className="regp-label">On-site Safety Officer</label>
-                <input className="regp-input" type="text" placeholder="Name &amp; Contact" />
+                <input className="regp-input" type="text" placeholder="Name &amp; Contact" required data-label="On-site Safety Officer" />
               </div>
             </div>
           </div>
@@ -333,7 +497,13 @@ export default function RegistrationPage() {
           <div className="regp-form-card" id="reg-section-10">
             <div className="regp-form-header">
               <div className="regp-step-badge legal">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20" /><path d="M6 18h12" /><path d="M6 6h12" /><path d="M8 10h8" /><path d="M8 14h8" /></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="m14 13-8.5 8.5a2.12 2.12 0 1 1-3-3L11 10" />
+                  <path d="m16 16 6-6" />
+                  <path d="m8 8 6-6" />
+                  <path d="m9 7 8 8" />
+                  <path d="m21 11-8-8" />
+                </svg>
               </div>
               <h3 className="regp-form-title">Legal Declaration</h3>
             </div>
@@ -359,11 +529,51 @@ export default function RegistrationPage() {
               </div>
               <p className="regp-declaration-text">I agree to the <strong className="regp-link">HanaPin Partner Terms and Conditions</strong> and <strong className="regp-link">Privacy Policy</strong>.</p>
             </div>
+
+            {declarationError && (
+              <div className="regp-warn-sign">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                  <line x1="12" y1="9" x2="12" y2="13" />
+                  <line x1="12" y1="17" x2="12.01" y2="17" />
+                </svg>
+                <span>Please check both legal declarations before submitting the data registry.</span>
+              </div>
+            )}
           </div>
 
-          <button className="regp-submit-btn" type="button" onClick={() => setShowModal(true)}>
-            Submit Registration
-          </button>
+          <div className="regp-actions-panel">
+            <div className="regp-actions-row">
+              <div className="regp-actions-info">
+                <div className="regp-actions-progress">
+                  <div className="regp-actionbar-track">
+                    <div className="regp-actionbar-fill" style={{ width: `${progress}%` }} />
+                  </div>
+                  <span className="regp-actionbar-pct">{progress}% filled</span>
+                </div>
+
+                <div className="regp-actionbar-time">
+                  <span className="regp-actionbar-saved-text">Last saved {formatLastSavedFrom(now.getTime())}</span>
+                </div>
+
+                {savedFlash && (
+                  <span className="regp-actionbar-toast">Progress saved</span>
+                )}
+              </div>
+
+              <div className="regp-actions-buttons">
+                <button type="button" className="regp-actionbar-btn discard" onClick={handleDiscard}>
+                  Discard Draft
+                </button>
+                <button type="button" className="regp-actionbar-btn save" onClick={handleSaveProgress}>
+                  Save Progress
+                </button>
+                <button className="regp-submit-btn" type="button" onClick={handleSubmitRegistration}>
+                  Submit Data Registry
+                </button>
+              </div>
+            </div>
+          </div>
 
           <div className="regp-spacer" />
         </main>

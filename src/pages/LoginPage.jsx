@@ -1,14 +1,38 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import VerifyOtpModal from "../components/VerifyOtpModal";
+import ResetPasswordModal from "../components/ResetPasswordModal";
 import "./LoginPage.css";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [showForgot, setShowForgot] = useState(false);
+  const [showVerify, setShowVerify] = useState(false);
+  const [showReset, setShowReset] = useState(false);
+  const [email, setEmail] = useState("");
+  const [fpError, setFpError] = useState("");
   const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
-    navigate("/dashboard");
+    localStorage.setItem("access_token", "mock-access-token");
+    navigate("/establishment-type");
+  }
+
+  function handleForgotSubmit(e) {
+    e.preventDefault();
+    if (!email) {
+      setFpError("Please enter your email address.");
+      return;
+    }
+    setFpError("");
+    setShowForgot(false);
+    setShowVerify(true);
+  }
+
+  function handleVerified() {
+    setShowVerify(false);
+    setShowReset(true);
   }
 
   return (
@@ -32,10 +56,7 @@ export default function LoginPage() {
             </div>
 
             <div className="login-field">
-              <div className="login-label-row">
-                <label>Password</label>
-                <a href="/login" className="login-forgot">Forgot Password?</a>
-              </div>
+              <label>Password</label>
               <div className="login-password-wrap">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -62,6 +83,7 @@ export default function LoginPage() {
                   )}
                 </button>
               </div>
+              <button type="button" className="login-forgot" onClick={() => setShowForgot(true)}>Forgot Password?</button>
             </div>
 
             <button type="submit" className="login-submit">Sign In</button>
@@ -110,6 +132,50 @@ export default function LoginPage() {
           </div>
         </div>
       </footer>
+
+      {showForgot && (
+        <div className="login-fp-overlay" onClick={() => setShowForgot(false)}>
+          <div className="login-fp-modal" onClick={(e) => e.stopPropagation()}>
+            <button
+              type="button"
+              className="login-fp-close"
+              aria-label="Close"
+              onClick={() => setShowForgot(false)}
+            >
+              &times;
+            </button>
+
+            <h2 className="login-fp-title">Forgot Password</h2>
+            <p className="login-fp-desc">
+              Enter your email address and we&apos;ll send you a link to reset
+              your password.
+            </p>
+
+            <form className="login-fp-form" onSubmit={handleForgotSubmit}>
+              <label>Email Address</label>
+              <input
+                type="email"
+                placeholder="name@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              {fpError && <p className="login-fp-error">{fpError}</p>}
+              <button type="submit" className="login-fp-submit">SEND RESET LINK</button>
+            </form>
+
+            <button
+              type="button"
+              className="login-fp-back"
+              onClick={() => setShowForgot(false)}
+            >
+              Back to Sign In
+            </button>
+          </div>
+        </div>
+      )}
+
+      {showVerify && <VerifyOtpModal onClose={() => setShowVerify(false)} onVerified={handleVerified} />}
+      {showReset && <ResetPasswordModal onClose={() => setShowReset(false)} />}
     </div>
   );
 }
