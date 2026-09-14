@@ -79,6 +79,37 @@
   color: #fff;
 }
 
+.lp3-nav .lp3-nav-back {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 20px;
+  background: #0a6b48;
+  border-radius: 24px;
+  transition: background 0.2s;
+}
+
+.lp3-nav .lp3-nav-back:hover {
+  background: #085a3d;
+}
+
+@media (max-height: 560px) {
+  .lp3-nav {
+    position: static;
+  }
+
+  .lp3-hero {
+    min-height: calc(100vh - 72px);
+    height: auto;
+    padding: 32px 20px 40px;
+  }
+
+  .lp3-card {
+    padding: 28px 20px;
+  }
+}
+
 /* ── Hero / Background ── */
 
 .lp3-hero {
@@ -103,7 +134,10 @@
 .lp3-card {
   position: relative;
   z-index: 5;
-  background: #fff;
+  background: transparent;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0);
   border-radius: 24px;
   box-shadow: 0 12px 48px rgba(0, 0, 0, 0.12);
   width: 100%;
@@ -116,7 +150,7 @@
   font-family: "Playfair Display", Georgia, serif;
   font-size: 34px;
   font-weight: 700;
-  color: #083B46;
+  color: #fff;
   margin-bottom: 12px;
   line-height: 1.2;
 }
@@ -124,7 +158,7 @@
 .lp3-card-desc {
   font-size: 15px;
   font-weight: 400;
-  color: #666;
+  color: #ffffff;
   line-height: 1.7;
   margin-bottom: 40px;
   max-width: 420px;
@@ -306,5 +340,53 @@
 
   .lp3-footer-copy {
     text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .lp3-nav {
+    padding: 0 16px;
+  }
+
+  .lp3-nav .logo-text {
+    font-size: 20px;
+  }
+
+  .lp3-nav .get-started {
+    padding: 8px 18px;
+    font-size: 13px;
+  }
+
+  .lp3-hero {
+    padding: 88px 16px 32px;
+  }
+
+  .lp3-card {
+    padding: 32px 20px;
+    border-radius: 20px;
+  }
+
+  .lp3-card-title {
+    font-size: 24px;
+  }
+
+  .lp3-card-desc {
+    font-size: 13px;
+  }
+
+  .lp3-option {
+    padding: 20px 16px;
+  }
+
+  .lp3-option-title {
+    font-size: 18px;
+  }
+
+  .lp3-option-desc {
+    font-size: 13px;
+  }
+
+  .lp3-footer {
+    padding: 32px 16px;
   }
 }

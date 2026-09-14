@@ -10,6 +10,9 @@ export default function LandingPage3() {
         <div className="nav-left">
           <Link to="/" className="logo-text">HanaPin</Link>
         </div>
+        <div className="nav-right">
+          <Link to="/login" className="lp3-nav-back">Back</Link>
+        </div>
       </nav>
 
       <section className="lp3-hero">

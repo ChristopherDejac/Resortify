@@ -254,7 +254,7 @@
 
 .reg-input-icon input {
   width: 100%;
-  padding: 12px 14px 12px 42px;
+  padding: 12px 42px 12px 14px;
   border: none;
   border-radius: 12px;
   font-size: 14px;
@@ -265,12 +265,76 @@
   box-sizing: border-box;
 }
 
+.reg-toggle-password {
+  position: absolute;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.reg-toggle-password svg {
+  position: static;
+  width: 18px;
+  height: 18px;
+}
+
 .reg-input-icon input::placeholder {
   color: rgba(255, 255, 255, 0.5);
 }
 
 .reg-input-icon input:focus {
   background: rgba(255, 255, 255, 0.35);
+}
+
+.reg-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.reg-divider::before,
+.reg-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.reg-social {
+  display: flex;
+  gap: 12px;
+}
+
+.reg-social-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.reg-social-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.6);
 }
 
 .reg-checkbox {
@@ -319,7 +383,7 @@
 }
 
 .reg-signin a {
-  color: #fff;
+  color: #055719;
   font-weight: 600;
   text-decoration: none;
 }

@@ -40,16 +40,17 @@
 .regp-nav-link {
   font-size: 14px;
   font-weight: 600;
-  color: #0b5a50;
+  color: #fff;
   text-decoration: none;
   padding: 8px 20px;
-  border: 1.5px solid #0b5a50;
+  background: #0a6b48;
+  border: none;
   border-radius: 24px;
   transition: background 0.2s;
 }
 
 .regp-nav-link:hover {
-  background: #f0f9f4;
+  background: #085a3d;
 }
 
 /* ─── Content Layout ─── */
@@ -518,6 +519,31 @@
   margin-bottom: 0;
 }
 
+.regp-declaration-card.invalid {
+  border-color: #e05a4e;
+  box-shadow: 0 0 0 2px rgba(224, 90, 78, 0.28);
+}
+
+.regp-warn-sign {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: #fdecea;
+  border: 1px solid #f5b7b1;
+  border-radius: 12px;
+  color: #c62828;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.regp-warn-sign svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
 .regp-declaration-check {
   width: 20px;
   height: 20px;
@@ -631,6 +657,12 @@
   height: 32px;
 }
 
+.regp-input.invalid,
+.regp-textarea.invalid {
+  border-color: #d9534f;
+  background: #fff5f5;
+}
+
 .regp-modal-title {
   font-family: "Playfair Display", Georgia, serif;
   font-size: 24px;
@@ -681,6 +713,164 @@
 
 .regp-modal-btn.secondary:hover {
   background: #f5f5f5;
+}
+
+/* ─── Registration Actions Panel ─── */
+.regp-actions-panel {
+  margin: 40px 0 0;
+  background: #f4f7f9;
+  border: 1px solid #e8ecf0;
+  border-radius: 16px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.regp-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.regp-actions-info {
+  flex: 1;
+  min-width: 240px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  background: #fff;
+  border: 1px solid #e8ecf0;
+  border-radius: 16px;
+  padding: 14px 20px;
+}
+
+.regp-actions-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 180px;
+}
+
+.regp-actionbar-track {
+  flex: 1;
+  height: 8px;
+  background: #e6eaee;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.regp-actionbar-fill {
+  height: 100%;
+  background: #0a6b48;
+  border-radius: 8px;
+  transition: width 0.3s ease;
+}
+
+.regp-actionbar-pct {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0a6b48;
+  white-space: nowrap;
+}
+
+.regp-actionbar-time {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.regp-actionbar-saved-label {
+  font-size: 11px;
+  color: #0a6b48;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.regp-actionbar-saved-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #143d47;
+  white-space: nowrap;
+}
+
+.regp-actionbar-toast {
+  background: #0a6b48;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 10px;
+}
+
+.regp-actions-buttons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.regp-actions-buttons .regp-submit-btn {
+  flex: 1;
+}
+
+.regp-actionbar-btn {
+  padding: 14px 22px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.regp-actionbar-btn.discard {
+  background: #fff;
+  color: #b0521e;
+  border: 1.5px solid #e0a06a;
+}
+
+.regp-actionbar-btn.discard:hover {
+  background: #fdf1e7;
+}
+
+.regp-actionbar-btn.save {
+  background: #fff;
+  color: #0a6b48;
+  border: 1.5px solid #0a6b48;
+}
+
+.regp-actionbar-btn.save:hover {
+  background: #eaf4ef;
+}
+
+@media (max-width: 900px) {
+  .regp-actions-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .regp-actions-buttons {
+    flex-wrap: wrap;
+  }
+
+  .regp-actions-buttons .regp-submit-btn {
+    flex: 1 1 100%;
+    order: -1;
+  }
+
+  .regp-actionbar-btn {
+    flex: 1;
+  }
+
+  .regp-actionbar-time {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
 }
 
 /* ─── Footer ─── */
