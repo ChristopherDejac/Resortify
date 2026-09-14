@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import NotificationDropdown from "../components/NotificationDropdown";
 import verifiedIcon from "./icon-wallet.svg";
-import payIcon from "./icon.svg";
 import "./Payment.css";
 
 const statusFilters = ["All", "Paid & Verified", "Pending", "Rejected"];
@@ -38,7 +37,7 @@ export default function Payment() {
             Bookings
           </Link>
           <Link to="/payment" className="pay-nav-item active">
-            <img src={payIcon} alt="Payment" />
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2" /><circle cx="12" cy="12" r="3" /><line x1="4.5" y1="8" x2="6.5" y2="8" /><line x1="4.5" y1="16" x2="6.5" y2="16" /><line x1="17.5" y1="8" x2="19.5" y2="8" /><line x1="17.5" y1="16" x2="19.5" y2="16" /></svg>
             Payment
           </Link>
           <Link to="/guests" className="pay-nav-item">
