@@ -1,0 +1,102 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  color: #1a2a3a;
+  background: #fff;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ── Global responsive helpers ── */
+:root {
+  --sidebar-width: 240px;
+}
+
+/* Very small windows — scale down base font so cards/text/buttons fit */
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+}
+
+@media (max-width: 360px) {
+  html {
+    font-size: 13px;
+  }
+}
+
+/* Short windows — stop forcing 100vh so content isn't clipped */
+@media (max-height: 560px) {
+  .dash-layout,
+  .bk-layout,
+  .gst-layout,
+  .pay-layout,
+  .mg-layout,
+  .st-layout,
+  .ntf-layout {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .dash-main,
+  .bk-main,
+  .gst-main,
+  .pay-main,
+  .mg-main,
+  .st-main,
+  .ntf-main {
+    overflow-y: visible;
+  }
+}
+
+/* Refined dark scrollbars that don't break on small windows */
+@media (min-width: 769px) {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #c8d0d6;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #aeb8c0;
+  }
+}

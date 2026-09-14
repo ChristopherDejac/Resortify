@@ -1,0 +1,197 @@
+/* ─── Overlay ─── */
+.votp-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 24px;
+}
+
+/* ─── Modal Card ─── */
+.votp-modal {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  background: rgba(45, 60, 65, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  padding: 40px 32px;
+  text-align: center;
+}
+
+.votp-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.votp-close:hover {
+  color: #fff;
+}
+
+/* ─── Title & Description ─── */
+.votp-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 12px;
+}
+
+.votp-desc {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 0 28px;
+  line-height: 1.6;
+}
+
+/* ─── OTP Boxes ─── */
+.votp-boxes {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.votp-boxes input {
+  width: 48px;
+  height: 52px;
+  border: 1.5px solid transparent;
+  border-radius: 8px;
+  background: #fff;
+  color: #333;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.votp-boxes input:focus {
+  border-color: #7fd4b0;
+}
+
+.votp-error {
+  font-size: 12px;
+  color: #ffb3b3;
+  margin: 8px 0 0;
+}
+
+/* ─── Verify Button ─── */
+.votp-submit {
+  width: 100%;
+  padding: 13px;
+  background: #005c63;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 16px;
+}
+
+.votp-submit:hover {
+  background: #00636b;
+}
+
+/* ─── Resend ─── */
+.votp-resend {
+  margin-top: 18px;
+}
+
+.votp-resend-timer {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.votp-resend-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: #7fd4b0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.votp-resend-link:hover {
+  text-decoration: underline;
+}
+
+/* ─── Back Link ─── */
+.votp-back {
+  display: inline-block;
+  margin-top: 20px;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+  text-decoration: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.votp-back:hover {
+  text-decoration: underline;
+}
+
+/* ─── Success ─── */
+.votp-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0 24px;
+}
+
+.votp-success svg {
+  width: 34px;
+  height: 34px;
+  stroke: #7fd4b0;
+}
+
+.votp-success p {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.votp-done {
+  width: 100%;
+  padding: 13px;
+  background: #005c63;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.votp-done:hover {
+  background: #00636b;
+}
