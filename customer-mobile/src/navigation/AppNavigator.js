@@ -14,6 +14,20 @@ import ExploreScreen from "../screens/ExploreScreen";
 import BookingsScreen from "../screens/BookingsScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import NotificationsScreen from "../screens/NotificationsScreen";
+import FilterScreen from "../screens/FilterScreen";
+import ResortDetailScreen from "../screens/ResortDetailScreen";
+import AIChatScreen from "../screens/AIChatScreen";
+import ResortResultScreen from "../screens/ResortResultScreen";
+import PricingScreen from "../screens/PricingScreen";
+import GalleryScreen from "../screens/GalleryScreen";
+import AmenitiesScreen from "../screens/AmenitiesScreen";
+import ReviewsScreen from "../screens/ReviewsScreen";
+import BookingFormScreen from "../screens/BookingFormScreen";
+import BookingPaymentScreen from "../screens/BookingPaymentScreen";
+import BookingConfirmScreen from "../screens/BookingConfirmScreen";
+import BookingDetailsScreen from "../screens/BookingDetailsScreen";
+import RateReviewScreen from "../screens/RateReviewScreen";
+import ReceiptScreen from "../screens/ReceiptScreen";
 import { colors } from "../constants/theme";
 
 const Stack = createNativeStackNavigator();
@@ -21,7 +35,6 @@ const Tab = createBottomTabNavigator();
 
 const tabConfig = {
   Home: { label: "Home", icon: "home", iconOutline: "home-outline" },
-  Search: { label: "Search", icon: "search", iconOutline: "search-outline" },
   Bookings: { label: "Bookings", icon: "calendar", iconOutline: "calendar-outline" },
   Profile: { label: "Profile", icon: "person", iconOutline: "person-outline" },
 };
@@ -66,7 +79,6 @@ function MainTabs() {
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Search" component={ExploreScreen} />
       <Tab.Screen name="Bookings" component={BookingsScreen} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
@@ -93,7 +105,29 @@ export default function AppNavigator() {
         <Stack.Screen name="VerifyOtp" component={VerifyOtpScreen} options={popTransition} />
         <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} options={popTransition} />
         <Stack.Screen name="MainTabs" component={MainTabs} />
+        <Stack.Screen name="Search" component={ExploreScreen} options={popTransition} />
         <Stack.Screen name="Notifications" component={NotificationsScreen} options={popTransition} />
+        <Stack.Screen name="ResortDetail" component={ResortDetailScreen} options={popTransition} />
+        <Stack.Screen name="AIChat" component={AIChatScreen} options={popTransition} />
+        <Stack.Screen name="ResortResult" component={ResortResultScreen} options={popTransition} />
+        <Stack.Screen name="Pricing" component={PricingScreen} options={popTransition} />
+        <Stack.Screen name="Gallery" component={GalleryScreen} options={popTransition} />
+        <Stack.Screen name="Amenities" component={AmenitiesScreen} options={popTransition} />
+        <Stack.Screen name="Reviews" component={ReviewsScreen} options={popTransition} />
+        <Stack.Screen name="BookingForm" component={BookingFormScreen} options={popTransition} />
+        <Stack.Screen name="BookingPayment" component={BookingPaymentScreen} options={popTransition} />
+        <Stack.Screen name="BookingConfirm" component={BookingConfirmScreen} options={popTransition} />
+        <Stack.Screen name="BookingDetails" component={BookingDetailsScreen} options={popTransition} />
+        <Stack.Screen name="RateReview" component={RateReviewScreen} options={popTransition} />
+        <Stack.Screen name="Receipt" component={ReceiptScreen} options={popTransition} />
+        <Stack.Screen
+          name="Filter"
+          component={FilterScreen}
+          options={{
+            presentation: "modal",
+            animation: "slide_from_bottom",
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

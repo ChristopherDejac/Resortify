@@ -1,32 +1,39 @@
 import { useEffect, useRef } from "react";
-import { View, Text, Animated, StyleSheet, Platform } from "react-native";
+import { View, Text, Animated, StyleSheet, Platform, StatusBar } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../constants/theme";
 
 export default function SplashScreen({ onFinish }) {
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.85)).current;
   const taglineAnim = useRef(new Animated.Value(0)).current;
-  const dot1 = useRef(new Animated.Value(0)).current;
-  const dot2 = useRef(new Animated.Value(0)).current;
-  const dot3 = useRef(new Animated.Value(0)).current;
+  const loadDot1 = useRef(new Animated.Value(0)).current;
+  const loadDot2 = useRef(new Animated.Value(0)).current;
+  const loadDot3 = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    const animateDot = (dot, delay) =>
+    const bounceDot = (dot, delay) =>
       Animated.loop(
         Animated.sequence([
           Animated.delay(delay),
           Animated.timing(dot, {
             toValue: 1,
-            duration: 400,
+            duration: 350,
             useNativeDriver: true,
           }),
           Animated.timing(dot, {
             toValue: 0,
-            duration: 400,
+            duration: 350,
             useNativeDriver: true,
           }),
         ])
       );
+
+    Animated.parallel([
+      bounceDot(loadDot1, 0),
+      bounceDot(loadDot2, 120),
+      bounceDot(loadDot3, 240),
+    ]).start();
 
     Animated.sequence([
       Animated.parallel([
@@ -47,28 +54,24 @@ export default function SplashScreen({ onFinish }) {
         duration: 600,
         useNativeDriver: true,
       }),
-      Animated.delay(1200),
+      Animated.delay(1300),
     ]).start(() => onFinish?.());
-
-    Animated.parallel([
-      animateDot(dot1, 0),
-      animateDot(dot2, 200),
-      animateDot(dot3, 400),
-    ]).start();
   }, []);
 
-  const dotScale = (dot) =>
+  const dotBounce = (dot) =>
     dot.interpolate({
       inputRange: [0, 1],
-      outputRange: [0.5, 1.2],
+      outputRange: [0, -10],
     });
 
   return (
     <View style={styles.container}>
-      <View style={styles.watermark} pointerEvents="none">
-        <View style={styles.leafShape} />
-      </View>
+      <StatusBar backgroundColor={colors.white} barStyle="dark-content" />
 
+      {/* Mint panel */}
+      <View style={styles.panel} />
+
+      {/* Centered logo block */}
       <Animated.View
         style={[
           styles.brand,
@@ -76,26 +79,27 @@ export default function SplashScreen({ onFinish }) {
         ]}
       >
         <View style={styles.logoBadge}>
-          <Text style={styles.logoIcon}>🌿</Text>
+          <Ionicons name="leaf" size={46} color={colors.white} style={styles.logoIcon} />
         </View>
         <Text style={styles.logoText}>HanaPin</Text>
+
+        <Animated.View style={{ opacity: taglineAnim }}>
+          <Text style={styles.tagline}>Naturally Refined</Text>
+        </Animated.View>
       </Animated.View>
 
-      <Animated.View style={{ opacity: taglineAnim }}>
-        <Text style={styles.tagline}>Naturally Refined</Text>
-      </Animated.View>
-
-      <View style={styles.dotsRow}>
-        {[dot1, dot2, dot3].map((dot, i) => (
+      {/* Loading dots at screen bottom */}
+      <View style={styles.loadingRow}>
+        {[loadDot1, loadDot2, loadDot3].map((d, i) => (
           <Animated.View
             key={i}
             style={[
-              styles.dot,
+              styles.loadDot,
               {
-                transform: [{ scale: dotScale(dot) }],
-                opacity: dot.interpolate({
+                transform: [{ translateY: dotBounce(d) }],
+                opacity: d.interpolate({
                   inputRange: [0, 1],
-                  outputRange: [0.3, 1],
+                  outputRange: [0.4, 1],
                 }),
               },
             ]}
@@ -113,26 +117,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  watermark: {
-    ...StyleSheet.absoluteFillObject,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  leafShape: {
-    width: 240,
-    height: 280,
-    borderRadius: 200,
-    backgroundColor: "rgba(191, 238, 219, 0.4)",
-    transform: [{ rotate: "-15deg" }, { skewY: "10deg" }],
+  panel: {
+    position: "absolute",
+    width: 340,
+    height: 340,
+    borderRadius: 88,
+    backgroundColor: "rgba(191, 238, 219, 0.5)",
   },
   brand: {
     alignItems: "center",
     gap: 12,
+    transform: [{ translateY: 42 }],
   },
   logoBadge: {
-    width: 72,
-    height: 72,
-    borderRadius: 36,
+    width: 88,
+    height: 88,
+    borderRadius: 24,
     backgroundColor: colors.primary,
     alignItems: "center",
     justifyContent: "center",
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     shadowRadius: 12,
   },
   logoIcon: {
-    fontSize: 32,
+    marginTop: 1,
   },
   logoText: {
     fontFamily: Platform.OS === "ios" ? "Georgia" : "serif",
@@ -158,18 +158,21 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
     color: colors.subtitle,
     letterSpacing: 2,
-    marginTop: 8,
+    marginTop: 6,
   },
-  dotsRow: {
+  loadingRow: {
     position: "absolute",
-    bottom: 80,
+    bottom: 44,
+    alignSelf: "center",
     flexDirection: "row",
-    gap: 10,
+    alignItems: "center",
+    gap: 8,
+    height: 14,
   },
-  dot: {
+  loadDot: {
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.accent,
   },
 });
