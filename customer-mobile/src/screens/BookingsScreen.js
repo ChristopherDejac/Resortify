@@ -9,39 +9,45 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 import { useTheme } from "../context/ThemeContext";
+import AIChatButton from "../components/AIChatButton";
+import { bookingsByStatus } from "../data";
 
 const TABS = ["Upcoming", "Completed", "Cancelled"];
 
-const bookingsData = {
-  Upcoming: [],
-  Completed: [],
-  Cancelled: [],
-};
-
-function BookingCard({ booking, statusColor, colors }) {
+function BookingCard({ booking, statusColor, colors, navigation }) {
   const badgeBg =
     statusColor === "mint"
       ? colors.secondary
       : statusColor === "blue"
-      ? "#D6EEF8"
+      ? colors.deep
       : "#ECEEF0";
   const badgeText =
     statusColor === "mint"
-      ? colors.deep
+      ? "#0B5D5A"
       : statusColor === "blue"
-      ? "#1A7A8A"
+      ? colors.white
       : colors.subtitle;
 
   const getActions = () => {
     if (statusColor === "mint") {
       return (
         <View style={styles.actionsRow}>
-          <TouchableOpacity style={[styles.actionBtn, { backgroundColor: colors.deep }]} activeOpacity={0.7}>
+          <TouchableOpacity
+            style={[styles.actionBtn, { backgroundColor: colors.deep }]}
+            activeOpacity={0.7}
+onPress={() =>
+              navigation.navigate("BookingDetails", { bookingId: booking.id })
+            }
+          >
             <Text style={[styles.actionBtnText, { color: colors.white }]}>View Details</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.actionBtn, styles.actionBtnOutline, { borderColor: colors.deep }]} activeOpacity={0.7}>
-            <Text style={[styles.actionBtnText, { color: colors.deep }]}>Directions</Text>
+          <TouchableOpacity
+            style={[styles.actionBtn, styles.actionBtnOutline, { borderColor: colors.accent }]}
+            activeOpacity={0.7}
+          >
+            <Text style={[styles.actionBtnText, { color: colors.accent }]}>Directions</Text>
           </TouchableOpacity>
         </View>
       );
@@ -49,18 +55,36 @@ function BookingCard({ booking, statusColor, colors }) {
     if (statusColor === "blue") {
       return (
         <View style={styles.actionsRow}>
-          <TouchableOpacity style={[styles.actionBtn, { backgroundColor: colors.deep }]} activeOpacity={0.7}>
-            <Text style={[styles.actionBtnText, { color: colors.white }]}>Rate & Review</Text>
+          <TouchableOpacity
+            style={[styles.actionBtn, styles.rateBtn]}
+            activeOpacity={0.85}
+            onPress={() =>
+              navigation.navigate("RateReview", { resort: booking.resort })
+            }
+          >
+            <Ionicons name="star" size={14} color={colors.white} />
+            <Text style={styles.rateBtnText}>Rate &amp; Review</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.actionBtn, styles.actionBtnOutline, { borderColor: colors.deep }]} activeOpacity={0.7}>
-            <Text style={[styles.actionBtnText, { color: colors.deep }]}>Receipt</Text>
+          <TouchableOpacity
+            style={[styles.actionBtn, styles.receiptBtn]}
+            activeOpacity={0.85}
+            onPress={() =>
+              navigation.navigate("Receipt", { bookingId: booking.id })
+            }
+          >
+            <Ionicons name="receipt-outline" size={14} color={colors.subtitle} />
+            <Text style={styles.receiptBtnText}>Receipt</Text>
           </TouchableOpacity>
         </View>
       );
     }
     return (
       <View style={styles.actionsRow}>
-        <TouchableOpacity style={[styles.actionBtn, { backgroundColor: colors.deep }]} activeOpacity={0.7}>
+        <TouchableOpacity
+          style={[styles.actionBtn, { backgroundColor: colors.deep }]}
+          activeOpacity={0.7}
+          onPress={() => navigation.navigate("BookingDetails", { bookingId: booking.id })}
+        >
           <Text style={[styles.actionBtnText, { color: colors.white }]}>View Details</Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.actionBtn, styles.actionBtnOutline, { borderColor: colors.deep }]} activeOpacity={0.7}>
@@ -73,16 +97,24 @@ function BookingCard({ booking, statusColor, colors }) {
   return (
     <View style={[styles.card, { backgroundColor: colors.card, borderColor: colors.border }]}>
       <View style={styles.imageBox}>
-        <Text style={styles.imageEmoji}>{booking.emoji}</Text>
+        <LinearGradient colors={booking.gradient} style={styles.imageGradient}>
+          <Text style={styles.imageEmoji}>{booking.emoji}</Text>
+        </LinearGradient>
         <View style={[styles.badge, { backgroundColor: badgeBg }]}>
           <Text style={[styles.badgeText, { color: badgeText }]}>{booking.status}</Text>
         </View>
       </View>
       <View style={styles.cardBody}>
-        <Text style={[styles.resortName, { color: colors.text }]}>{booking.resort}</Text>
-        <View style={styles.datesRow}>
-          <Text style={styles.datesLabel}>DATES</Text>
-          <Text style={[styles.datesValue, { color: colors.text }]}>{booking.dates}</Text>
+        <View style={styles.nameDateRow}>
+          <Text style={[styles.resortName, { color: colors.text }]}>
+            {booking.resort}
+          </Text>
+          <View style={styles.dateCol}>
+            <Text style={styles.datesLabel}>{booking.label || "DATES"}</Text>
+            <Text style={[styles.datesValue, { color: colors.text }]}>
+              {booking.dates}
+            </Text>
+          </View>
         </View>
         <View style={styles.locationRow}>
           <Ionicons name="location-outline" size={14} color={colors.subtitle} />
@@ -98,7 +130,7 @@ export default function BookingsScreen({ navigation }) {
   const { colors } = useTheme();
   const [activeTab, setActiveTab] = useState("Upcoming");
 
-  const bookings = bookingsData[activeTab] || [];
+  const bookings = bookingsByStatus[activeTab] || [];
 
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: colors.background }]} edges={["top"]}>
@@ -156,12 +188,15 @@ export default function BookingsScreen({ navigation }) {
               booking={booking}
               statusColor={booking.statusColor}
               colors={colors}
+              navigation={navigation}
             />
           ))
         )}
 
         <View style={{ height: 24 }} />
       </ScrollView>
+
+      <AIChatButton navigation={navigation} />
     </SafeAreaView>
   );
 }
@@ -235,10 +270,12 @@ const styles = StyleSheet.create({
   },
   imageBox: {
     height: 150,
-    backgroundColor: "#D4E4E8",
+    position: "relative",
+  },
+  imageGradient: {
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    position: "relative",
   },
   imageEmoji: {
     fontSize: 48,
@@ -259,14 +296,22 @@ const styles = StyleSheet.create({
     padding: 14,
     gap: 6,
   },
+  nameDateRow: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    gap: 10,
+  },
   resortName: {
+    flex: 1,
+    fontFamily: Platform.OS === "ios" ? "Georgia" : "serif",
     fontSize: 16,
     fontWeight: "700",
+    lineHeight: 21,
   },
-  datesRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+  dateCol: {
+    alignItems: "flex-end",
+    gap: 2,
   },
   datesLabel: {
     fontSize: 10,
@@ -277,6 +322,7 @@ const styles = StyleSheet.create({
   datesValue: {
     fontSize: 12,
     fontWeight: "600",
+    textAlign: "right",
   },
   locationRow: {
     flexDirection: "row",
@@ -301,6 +347,28 @@ const styles = StyleSheet.create({
   actionBtnOutline: {
     backgroundColor: "transparent",
     borderWidth: 1.5,
+  },
+  rateBtn: {
+    backgroundColor: "#2AAE8E",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+  },
+  rateBtnText: {
+    fontSize: 13,
+    fontWeight: "700",
+    color: "#FFFFFF",
+  },
+  receiptBtn: {
+    backgroundColor: "#ECEEF0",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 5,
+  },
+  receiptBtnText: {
+    fontSize: 13,
+    fontWeight: "600",
+    color: "#6E7B81",
   },
   actionBtnText: {
     fontSize: 13,

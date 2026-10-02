@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   View,
   Text,
-  TextInput,
   ScrollView,
   TouchableOpacity,
   StyleSheet,
@@ -11,13 +10,8 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors } from "../constants/theme";
-
-const categories = [
-  { label: "Resorts", family: "ion", icon: "location-outline", active: "location" },
-  { label: "Nature", family: "mci", icon: "tree-outline", active: "tree" },
-  { label: "Pools", family: "ion", icon: "water-outline", active: "water" },
-  { label: "Events", family: "ion", icon: "calendar-outline", active: "calendar" },
-];
+import AIChatButton from "../components/AIChatButton";
+import { homeCategories as categories } from "../data";
 
 function CategoryIcon({ family, name, size, color }) {
   if (family === "mci") {
@@ -53,14 +47,16 @@ export default function HomeScreen({ navigation }) {
         contentContainerStyle={styles.scroll}
       >
         {/* Search */}
-        <View style={styles.searchWrap}>
+        <TouchableOpacity
+          style={styles.searchWrap}
+          activeOpacity={0.7}
+          onPress={() => navigation.getParent().navigate("Search")}
+        >
           <Ionicons name="search" size={18} color={colors.textMuted} />
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Where would you like to escape?"
-            placeholderTextColor={colors.textMuted}
-          />
-        </View>
+          <Text style={styles.searchPlaceholder}>
+            Where would you like to escape?
+          </Text>
+        </TouchableOpacity>
 
         {/* Quick categories */}
         <View style={styles.categoriesRow}>
@@ -93,6 +89,8 @@ export default function HomeScreen({ navigation }) {
 
         <View style={{ height: 24 }} />
       </ScrollView>
+
+      <AIChatButton navigation={navigation} />
     </SafeAreaView>
   );
 }
@@ -148,10 +146,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     gap: 8,
   },
-  searchInput: {
+  searchPlaceholder: {
     flex: 1,
     fontSize: 14,
-    color: colors.text,
+    color: colors.textMuted,
   },
   categoriesRow: {
     flexDirection: "row",

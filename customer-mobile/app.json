@@ -6,10 +6,6 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "newArchEnabled": false,
-    "splash": {
-      "backgroundColor": "#083F4A"
-    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.resortify.customer"
@@ -25,7 +21,8 @@
     },
     "plugins": [
       "expo-asset",
-      "expo-font"
+      "expo-font",
+      ["expo-splash-screen", { "backgroundColor": "#083F4A" }]
     ]
   }
 }

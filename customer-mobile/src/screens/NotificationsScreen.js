@@ -2,27 +2,13 @@ import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Platform } from "
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { colors } from "../constants/theme";
+import { notificationGroups as notifications } from "../data";
 
 const iconColorMap = {
   mint: { bg: colors.secondary, icon: colors.deep },
   blue: { bg: "#D6EEF8", icon: "#1A7A8A" },
   gray: { bg: "#ECEEF0", icon: colors.subtitle },
 };
-
-const notifications = [
-  {
-    group: "Today",
-    items: [],
-  },
-  {
-    group: "Yesterday",
-    items: [],
-  },
-  {
-    group: "Last Week",
-    items: [],
-  },
-];
 
 function NotificationCard({ item }) {
   const palette = iconColorMap[item.iconColor] || iconColorMap.gray;
